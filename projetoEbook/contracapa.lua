@@ -43,20 +43,21 @@ function scene:create( event )
     local semsom = display.newImage(sceneGroup, "/assets/botao/semsom.png")
     semsom.x = display.contentWidth - semsom.width/2 - MARGIN - 500
     semsom.y = display.contentHeight - semsom.height/2 - MARGIN
-    semsom.isVisible = false  
+    semsom.isVisible = false 
     
     backgroundSound = audio.loadStream("audio7/audio7.mp3")
 
+   
     local function toggleSound(event)
         if som.isVisible then
             som.isVisible = false
             semsom.isVisible = true
-           
+            
             print("Som desligado")
         else
             som.isVisible = true
             semsom.isVisible = false
-            
+           
             print("Som ligado")
         end
         return true  
