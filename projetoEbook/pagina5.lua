@@ -183,7 +183,7 @@ function scene:create(event)
     semsom.isVisible = false  
 
   
-    backgroundSound = audio.loadStream("audios/audio5.mp3")
+    backgroundSound = audios.loadStream("audios/audio5.mp3")
 
 
     local function toggleSound(event)
