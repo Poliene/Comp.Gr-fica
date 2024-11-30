@@ -55,12 +55,14 @@ function scene:create( event )
     semsom.y = display.contentHeight - semsom.height/2 - MARGIN
     semsom.isVisible = false  
 
-   
+    backgroundSound = audio.loadStream("audio3/audio3.mp3")
+
+    
     local function toggleSound(event)
         if som.isVisible then
             som.isVisible = false
             semsom.isVisible = true
-            
+           
             print("Som desligado")
         else
             som.isVisible = true
