@@ -54,6 +54,8 @@ function scene:create( event )
     semsom.x = display.contentWidth - semsom.width/2 - MARGIN - 500
     semsom.y = display.contentHeight - semsom.height/2 - MARGIN
     semsom.isVisible = false
+ 
+    backgroundSound = audio.loadStream("audio6/audio6.mp3")
 
     local function toggleSound(event)
         if som.isVisible then
