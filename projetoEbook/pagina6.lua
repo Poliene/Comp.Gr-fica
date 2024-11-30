@@ -38,10 +38,39 @@ function scene:create( event )
         
     end)
 
+    local texto5 = display.newImageRect(sceneGroup, "/assets/texto5/texto5.png", 653, 305)
+    texto5.x = display.contentCenterX + 6
+    texto5.y = display.contentHeight - 710
+    
+    local nmr6 = display.newImageRect(sceneGroup, "/assets/nmr6/nmr6.png", 29, 70)
+    nmr6.x = display.contentCenterX - 5
+    nmr6.y = display.contentHeight - 85
+
     local som = display.newImage(sceneGroup, "/assets/botao/som.png")
     som.x = display.contentWidth - som.width/2 - MARGIN - 500
     som.y = display.contentHeight - som.height/2 - MARGIN
-    
+
+    local semsom = display.newImage(sceneGroup, "/assets/botao/semsom.png")
+    semsom.x = display.contentWidth - semsom.width/2 - MARGIN - 500
+    semsom.y = display.contentHeight - semsom.height/2 - MARGIN
+    semsom.isVisible = false
+
+    local function toggleSound(event)
+        if som.isVisible then
+            som.isVisible = false
+            semsom.isVisible = true
+            print("Som desligado")
+        else
+            som.isVisible = true
+            semsom.isVisible = false
+            print("Som ligado")
+        end
+        return true
+    end
+
+    som:addEventListener("tap", toggleSound)
+    semsom:addEventListener("tap", toggleSound)
+
 end
  
 function scene:show( event )
@@ -65,7 +94,6 @@ function scene:hide( event )
  
     end
 end
- 
  
 function scene:destroy( event )
     local sceneGroup = self.view
