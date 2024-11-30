@@ -29,25 +29,25 @@ function scene:create( event )
     casa.x = display.contentWidth - 435
     casa.y = display.contentHeight - 360
 
-    -- Coordenadas do local onde o cano vazio deve ser colocado
+    
 local destinoX = display.contentCenterX + 180
 local destinoY = display.contentCenterY + 155
 
--- Coordenadas do chuveiro
+
 local chuveiroDestinoX = display.contentCenterX - 260
 local chuveiroDestinoY = display.contentHeight - 310
 
--- Criar o cano vazio
+
 local cano = display.newImageRect(sceneGroup, "/assets/cano/cano.png", 290, 137)
 cano.x = display.contentCenterX - 260
 cano.y = display.contentCenterY + 70
-cano.isVisible = true -- Começa visível
+cano.isVisible = true 
 
--- Criar o canolimpo (cano cheio)
+
 local canolimpo = display.newImageRect(sceneGroup, "/assets/canolimpo/canolimpo.png", 290, 137)
-canolimpo.x = destinoX
-canolimpo.y = destinoY
-canolimpo.isVisible = false -- Começa invisível
+canolimpo.x = destinoX - 5
+canolimpo.y = destinoY + 10
+canolimpo.isVisible = false 
 
 local chuveirosujo = display.newImageRect(sceneGroup, "/assets/chuveirosujo/chuveirosujo.png", 105, 105)
     chuveirosujo.x = display.contentCenterX - 260
@@ -59,37 +59,41 @@ local chuveirolimpo = display.newImageRect(sceneGroup, "/assets/chuveirolimpo/ch
     chuveirolimpo.y = display.contentHeight - 280
     chuveirolimpo.isVisible = false
 
--- Variável para rastrear se o cano foi substituído
+
 local canoSubstituido = false
 
 
--- Função para arrastar o cano vazio
+
 local function arrastarCano(event)
     if event.phase == "moved" then
-        -- Atualizar a posição do cano vazio enquanto é arrastado
+        
         cano.x = event.x
         cano.y = event.y
     elseif event.phase == "ended" then
-        -- Verificar se o cano vazio foi posicionado no local correto
-        if math.abs(cano.x - destinoX) < 30 and math.abs(cano.y - destinoY) < 30 then
+        
+        if math.abs(cano.x - destinoX) < 30 and math.abs(cano.y - destinoY) < 120 then
             print("Cano posicionado corretamente!")
 
-            -- Tornar o canolimpo visível e ocultar o cano vazio
+           
+            canolimpo.x = destinoX 
+            canolimpo.y = destinoY + 110
             canolimpo.isVisible = true 
             cano.isVisible = false
 
-            -- Substituir o chuveiro automaticamente
             chuveirosujo.isVisible = false
             chuveirolimpo.isVisible = true
-            --canoSubstituido = true -- Indicar que o cano foi substituído
         else
-            print("Cano ainda não está na posição correta.")
+            print("Cano não foi posicionado corretamente. Retorne para a posição inicial.")
+            
+            cano.x = display.contentCenterX - 260
+            cano.y = display.contentCenterY + 70
         end
     end
     return true 
 end
 
--- Adicionar o ouvinte de evento 'touch' ao cano vazio
+
+
 cano:addEventListener("touch", arrastarCano)
 
 
@@ -121,20 +125,6 @@ cano:addEventListener("touch", arrastarCano)
     nmr2.x = display.contentCenterX - 10
     nmr2.y = display.contentHeight - 85
 
-    
-    
-
-    --local canolimpo = display.newImageRect(sceneGroup, "/assets/canolimpo/canolimpo.png", 290, 137)
-    --canolimpo.x = display.contentCenterX + 180
-    --canolimpo.y = display.contentHeight - 380
-    --canolimpo.isVisible = false
-
-
-
-
-
-
-
     local voltar = display.newImage(sceneGroup, "/assets/botao/voltar.png")
     voltar.x = display.contentWidth - voltar.width/2 - MARGIN - 500
     voltar.y = display.contentHeight - 940
@@ -152,6 +142,31 @@ cano:addEventListener("touch", arrastarCano)
     local som = display.newImage(sceneGroup, "/assets/botao/som.png")
     som.x = display.contentWidth - som.width/2 - MARGIN - 500
     som.y = display.contentHeight - som.height/2 - MARGIN
+
+    local semsom = display.newImage(sceneGroup, "/assets/botao/semsom.png")
+    semsom.x = display.contentWidth - semsom.width/2 - MARGIN - 500
+    semsom.y = display.contentHeight - semsom.height/2 - MARGIN
+    semsom.isVisible = false  
+
+  
+    local function toggleSound(event)
+        if som.isVisible then
+            som.isVisible = false
+            semsom.isVisible = true
+           
+            print("Som desligado")
+        else
+            som.isVisible = true
+            semsom.isVisible = false
+           
+            print("Som ligado")
+        end
+        return true  
+    end
+
+    
+    som:addEventListener("tap", toggleSound)
+    semsom:addEventListener("tap", toggleSound)
 
 end
  
