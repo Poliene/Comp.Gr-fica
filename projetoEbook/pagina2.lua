@@ -37,11 +37,10 @@ local destinoY = display.contentCenterY + 155
 local chuveiroDestinoX = display.contentCenterX - 260
 local chuveiroDestinoY = display.contentHeight - 310
 
-
 local cano = display.newImageRect(sceneGroup, "/assets/cano/cano.png", 290, 137)
 cano.x = display.contentCenterX - 260
 cano.y = display.contentCenterY + 70
-cano.isVisible = true 
+cano.isVisible = true
 
 
 local canolimpo = display.newImageRect(sceneGroup, "/assets/canolimpo/canolimpo.png", 290, 137)
@@ -66,7 +65,7 @@ local canoSubstituido = false
 
 local function arrastarCano(event)
     if event.phase == "moved" then
-        
+       
         cano.x = event.x
         cano.y = event.y
     elseif event.phase == "ended" then
@@ -74,7 +73,7 @@ local function arrastarCano(event)
         if math.abs(cano.x - destinoX) < 30 and math.abs(cano.y - destinoY) < 120 then
             print("Cano posicionado corretamente!")
 
-           
+            
             canolimpo.x = destinoX 
             canolimpo.y = destinoY + 110
             canolimpo.isVisible = true 
@@ -148,17 +147,21 @@ cano:addEventListener("touch", arrastarCano)
     semsom.y = display.contentHeight - semsom.height/2 - MARGIN
     semsom.isVisible = false  
 
+   
+    backgroundSound = audio.loadStream("audios/audio14.mp3")
+
+
   
     local function toggleSound(event)
         if som.isVisible then
             som.isVisible = false
             semsom.isVisible = true
-           
+            
             print("Som desligado")
         else
             som.isVisible = true
             semsom.isVisible = false
-           
+            
             print("Som ligado")
         end
         return true  
@@ -167,7 +170,32 @@ cano:addEventListener("touch", arrastarCano)
     
     som:addEventListener("tap", toggleSound)
     semsom:addEventListener("tap", toggleSound)
+end
 
+function scene:show(event)
+    local sceneGroup = self.view
+    local phase = event.phase
+
+    if (phase == "will") then
+       
+    elseif (phase == "did") then
+        
+        if isSoundOn then
+            audio.play(backgroundSound, { loops = -1 }) 
+        end
+    end
+end
+
+function scene:hide(event)
+    local sceneGroup = self.view
+    local phase = event.phase
+
+    if (phase == "will") then
+       
+        audio.stop() 
+    elseif (phase == "did") then
+        
+    end
 end
  
 function scene:show( event )
