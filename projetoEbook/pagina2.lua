@@ -148,7 +148,7 @@ cano:addEventListener("touch", arrastarCano)
     semsom.isVisible = false  
 
    
-    backgroundSound = audio.loadStream("audios/audio14.mp3")
+    backgroundSound = audio.loadStream("audios/audio2.mp3")
 
 
   
